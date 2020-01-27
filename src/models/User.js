@@ -24,7 +24,15 @@ const userSchema = mongoose.Schema({
     type: String,
     required: true,
     minLength: 6
-  }
+  },
+  tokens: [
+    {
+      token: {
+        type: String,
+        required: true
+      }
+    }
+  ]
 });
 
 userSchema.pre("save", async function(next) {

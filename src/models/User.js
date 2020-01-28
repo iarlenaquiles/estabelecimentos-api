@@ -36,7 +36,7 @@ const userSchema = mongoose.Schema({
 });
 
 //criar hash da senha e salvar no document
-userSchema.pre("save", async next => {
+userSchema.pre("save", async function(next) {
   const user = this;
 
   if (user.isModified("password")) {
@@ -47,7 +47,7 @@ userSchema.pre("save", async next => {
 });
 
 //gerar token do user
-userSchema.methods.generateAuthToken = async () => {
+userSchema.methods.generateAuthToken = async function() {
   const user = this;
 
   const token = jwt.sign({ _id: user._id }, process.env.JWT_KEY);
@@ -76,4 +76,6 @@ userSchema.statics.findByCredentials = async (email, password) => {
   return user;
 };
 
-module.exports = mongoose.model("User", userSchema);
+const User = mongoose.model("User", userSchema);
+
+module.exports = User;
